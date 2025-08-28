@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Slides Timer – Home · Privacy · Terms</title>
+  <meta name="description" content="Slides Timer adds a smart, per-slide countdown overlay for Google Slides. Evenly divides total time, lets you add/remove per-slide time, and redistributes unused or overrun time dynamically." />
+  <link rel="icon" href="data:,">
+  <style>
+    :root{
+      --fg:#111; --bg:#fff; --muted:#666; --link:#0b57d0; --border:#e5e7eb; --chip:#f3f4f6;
+      --maxw: 880px;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --fg:#e6e6e6; --bg:#0b0b0b; --muted:#a1a1a1; --link:#8ab4f8; --border:#1f2937; --chip:#111318; }
+    }
+    *{ box-sizing:border-box }
+    html,body{ margin:0; padding:0; background:var(--bg); color:var(--fg); font:16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    a{ color:var(--link); text-decoration:none }
+    a:hover{ text-decoration:underline }
+    header{
+      position:sticky; top:0; z-index:10; backdrop-filter:saturate(180%) blur(8px);
+      background:color-mix(in oklab, var(--bg) 86%, transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 16px }
+    .bar{ display:flex; align-items:center; justify-content:space-between; min-height:56px; }
+    .brand{ font-weight:700; letter-spacing:.2px }
+    nav a{ margin-left:16px; padding:8px 10px; border-radius:8px; }
+    nav a.active{ background:var(--chip); text-decoration:none }
+    main{ max-width:var(--maxw); margin:28px auto 64px; padding:0 16px }
+    section{ padding:20px 0; border-bottom:1px solid var(--border) }
+    h1{ font-size:28px; margin:12px 0 8px }
+    h2{ font-size:22px; margin:18px 0 8px }
+    h3{ font-size:18px; margin:16px 0 8px }
+    p,li{ color:var(--fg) }
+    .muted{ color:var(--muted) }
+    .hero{
+      display:grid; gap:8px; padding:12px 0 4px;
+    }
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px }
+    .chip{ background:var(--chip); border:1px solid var(--border); padding:6px 10px; border-radius:999px; font-size:13px }
+    footer{ border-top:1px solid var(--border); padding:18px 0; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
+  </style>
+  <script>
+    // tiny helper to highlight active nav as you click/scroll
+    const setActive = () => {
+      const hash = location.hash || "#home";
+      for (const a of document.querySelectorAll("nav a")) {
+        a.classList.toggle("active", a.getAttribute("href") === hash);
+      }
+    };
+    window.addEventListener("hashchange", setActive);
+    window.addEventListener("DOMContentLoaded", () => {
+      // default to #home if no hash
+      if (!location.hash) history.replaceState(null, "", "#home");
+      setActive();
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <div class="wrap bar">
+      <div class="brand">Slides Timer</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" aria-label="Home">
+      <div class="hero">
+        <h1>Keep Every Google Slides Presentation on Time</h1>
+        <p>Slides Timer adds a smart, per-slide countdown overlay for Google Slides. Give it a total time and a slide range; it divides time evenly, lets you add/remove time per slide, and dynamically redistributes unused or overrun time during your talk.</p>
+        <div class="chips">
+          <span class="chip">Runs locally</span>
+          <span class="chip">No analytics</span>
+          <span class="chip">Read-only Slides scope</span>
+          <span class="chip">Draggable overlay</span>
+        </div>
+      </div>
+
+      <h2>How it works</h2>
+      <ul>
+        <li>Select a slide range (e.g., slides 1–10) and a total time (e.g., 10 minutes).</li>
+        <li>Optionally add per-slide overrides (e.g., <span class="mono">3: +2</span>, <span class="mono">5: -1</span>, or <span class="mono">7: =3</span> minutes).</li>
+        <li>Unused time rolls forward to later slides; overruns are subtracted from the remaining ones.</li>
+        <li>To validate your range, the extension can read the active deck’s slide count via the Google Slides API (<span class="mono">presentations.readonly</span>). No content is modified.</li>
+      </ul>
+
+      <h3>Privacy at a glance</h3>
+      <ul>
+        <li>No personal data collection. Settings are stored locally in Chrome storage.</li>
+        <li>Google Slides API used only to read slide counts when you opt in.</li>
+      </ul>
+
+      <p class="muted">Need the details? See <a href="#privacy">Privacy Policy</a> and <a href="#terms">Terms</a>.</p>
+    </section>
+
+    <!-- PRIVACY -->
+    <section id="privacy" aria-label="Privacy Policy">
+      <h1>Privacy Policy</h1>
+      <p><strong>Slides Timer</strong> is a Chrome extension that runs locally in your browser.</p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li><strong>No personal data is collected.</strong></li>
+        <li>Settings you configure (total time, slide range, per-slide overrides) are stored locally via Chrome storage.</li>
+        <li>When you opt in, the extension uses the Google Slides API with the scope <span class="mono">presentations.readonly</span> to read the <em>number of slides</em> in the active deck to validate your inputs. No slide content is downloaded or stored, and nothing is written back to Slides.</li>
+      </ul>
+
+      <h2>Sharing</h2>
+      <p>No data is sold or shared with third parties.</p>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <small class="muted">
+        © <span id="y"></span> Slides Timer · <a href="#privacy">Privacy</a> · <a href="#terms">Terms</a>
+      </small>
+    </div>
+  </footer>
+
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
